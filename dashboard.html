@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Dashboard</title>
+  <style>
+    /* Your styles are exactly the same */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #00796b 0%, #00897b 100%);
+      padding: 1.5rem 3rem;
+      border-radius: 15px;
+      color: white;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #00695c 0%, #00796b 100%);
+    }
+    h2 {
+      margin: 3rem 0 1.5rem;
+      color: #006064;
+      font-size: 2.2rem;
+      text-align: center;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, #00897b, #4db6ac);
+      border-radius: 2px;
+    }
+    #assessment-history {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 3rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 3rem;
+    }
+    #history-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .history-card {
+      background: linear-gradient(145deg, #ffffff 0%, #e8f5e9 100%);
+      border-left: 6px solid #009688;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .history-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    .history-card h3 {
+      color: #00796b;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .history-card h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 2px;
+      background: #4db6ac;
+    }
+    .history-card .score {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #004d40;
+      margin-bottom: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background-color: rgba(178, 235, 242, 0.3);
+      border-radius: 30px;
+      width: fit-content;
+    }
+    .history-card .details {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .history-card .details p {
+      margin: 1rem 0;
+      color: #004d40;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+    }
+    .history-card .details p strong {
+      color: #00796b;
+      margin-right: 1rem;
+    }
+    .history-card .created-at {
+      font-size: 1rem;
+      color: #00796b;
+      font-style: italic;
+      margin-top: auto;
+      padding: 0.8rem 1.5rem;
+      background-color: rgba(178, 235, 242, 0.3);
+      border-radius: 30px;
+    }
+    #privacy-tips {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 3rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    #tips-content {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: #006064;
+      line-height: 1.6;
+    }
+    @media (max-width: 1200px) {
+      #history-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 2rem 1rem;
+      }
+      header h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      nav {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.8rem;
+      }
+      .btn {
+        width: 100%;
+      }
+      #history-list {
+        grid-template-columns: 1fr;
+      }
+      #assessment-history, #privacy-tips {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Your Privacy Dashboard</h1>
+      <nav>
+        <a href="assessment.html" class="btn">New Assessment</a>
+        <button id="logout" class="btn">Logout</button>
+      </nav>
+    </header>
+
+    <section id="assessment-history">
+      <h2>Your Assessment History</h2>
+      <div id="history-list">
+        <!-- Assessment cards will be loaded here dynamically -->
+      </div>
+    </section>
+
+    <section id="privacy-tips">
+      <h2>Privacy Tips</h2>
+      <div id="tips-content">
+        <p>Here are some tips to improve your digital privacy:</p>
+        <p>• Review your social media privacy settings regularly</p>
+        <p>• Use unique passwords for different accounts</p>
+        <p>• Enable two-factor authentication whenever possible</p>
+        <p>• Be mindful of what personal information you share online</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    async function loadAssessments() {
+        try {
+            const res = await fetch('/api/assessments', {
+                credentials: 'include'
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to fetch assessments');
+            }
+
+            const data = await res.json();
+            const container = document.getElementById('history-list');
+            container.innerHTML = '';
+
+            if (!Array.isArray(data) || data.length === 0) {
+                container.innerHTML = '<p>No assessments found.</p>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'history-card';
+                card.innerHTML = `
+                    <h3>Assessment #${index + 1}</h3>
+                    <div class="score">Risk Score: ${item.score ?? 'N/A'}</div>
+                    <div class="details">
+                        <p><strong>Location Sharing:</strong> ${item.data?.sharesLocation ?? 'N/A'}</p>
+                        <p><strong>Social Media Use:</strong> ${item.data?.usesSocialMedia ?? 'N/A'}</p>
+                        <p><strong>Account Count:</strong> ${item.data?.numberOfAccounts ?? 'N/A'}</p>
+                        <p><strong>Public WiFi:</strong> ${item.data?.usesPublicWifi ?? 'N/A'}</p>
+                        <p><strong>Password Habits:</strong> ${item.data?.passwordHabits ?? 'N/A'}</p>
+                        <p><strong>2FA Enabled:</strong> ${item.data?.twoFactorEnabled ?? 'N/A'}</p>
+                    </div>
+                    <div class="created-at">Created on: ${new Date(item.createdAt).toLocaleDateString()}</div>
+                `;
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error('Error loading assessments:', error);
+            document.getElementById('history-list').innerHTML = '<p>Error loading data.</p>';
+        }
+    }
+
+    async function logout() {
+        try {
+            const res = await fetch('/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+
+            if (res.ok) {
+                window.location.href = '/login.html'; // redirect to login page
+            } else {
+                alert('Logout failed.');
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            alert('Logout error occurred.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAssessments();
+        document.getElementById('logout').addEventListener('click', logout);
+    });
+  </script>
+</body>
+</html>

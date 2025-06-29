@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Assessment</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 15px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      width: 100%;
+      max-width: 700px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      color: #00796b;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: #00897b;
+      font-size: 1.1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .question label {
+      font-weight: 600;
+      color: #006064;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    select,
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 1rem;
+      border: 1px solid #b2dfdb;
+      border-radius: 10px;
+      background-color: #e0f2f1;
+      transition: border-color 0.3s;
+    }
+
+    select:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #4db6ac;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(to right, #26a69a, #00897b);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #00897b, #00796b);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #results {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #e0f2f1;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    #results h2 {
+      color: #00695c;
+      margin-bottom: 10px;
+    }
+
+    #score {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #004d40;
+    }
+
+    #recommendations {
+      margin-top: 10px;
+      color: #424242;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Privacy Assessment</h1>
+      <p>Answer these questions to evaluate your privacy risk</p>
+    </header>
+
+    <form id="assessment-form">
+      <div class="question">
+        <label>How often do you share your location with apps?</label>
+        <select name="sharesLocation" required>
+          <option value="">Select an option</option>
+          <option value="never">Never</option>
+          <option value="sometimes">Only when necessary</option>
+          <option value="always">Always allow</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>Do you use social media platforms?</label>
+        <select name="usesSocialMedia" required>
+          <option value="">Select an option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>Approximately how many online accounts do you have?</label>
+        <input type="number" name="numberOfAccounts" min="1" required />
+      </div>
+
+      <div class="question">
+        <label>Do you connect to public WiFi networks?</label>
+        <select name="usesPublicWifi" required>
+          <option value="">Select an option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>Which best describes your password habits?</label>
+        <select name="passwordHabits" required>
+          <option value="">Select an option</option>
+          <option value="unique">Unique password for each account</option>
+          <option value="few">A few different passwords</option>
+          <option value="reuse">Same password for most accounts</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>Do you use two-factor authentication?</label>
+        <select name="twoFactorEnabled" required>
+          <option value="">Select an option</option>
+          <option value="yes">Yes, whenever possible</option>
+          <option value="some">On some important accounts</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn">Calculate My Privacy Score</button>
+    </form>
+
+    <div id="results" style="display: none;">
+      <h2>Your Privacy Risk Score: <span id="score"></span>/100</h2>
+      <div id="recommendations"></div>
+      <a href="dashboard.html" class="btn" style="margin-top: 20px;">View Dashboard</a>
+    </div>
+  </div>
+
+  <script src="js/assessment.js"></script>
+</body>
+</html>
